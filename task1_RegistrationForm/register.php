@@ -23,6 +23,7 @@ if (empty($name) || empty($email) || empty($password) || empty($confirmedPasswor
         header("location: homepage.php?email=" . urlencode($email));
         $stmt->close();
         $conn->close();
+        exit();
     }
 }
 ?>

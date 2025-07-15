@@ -7,11 +7,12 @@
 
 <body>
     <?php
+    $email = $_GET["email"];
     $conn = new mysqli("localhost", "root", "", "test_db");
     if ($conn->connect_error) {
         die("Connection Failed :" . $conn->connect_error);
     } else {
-        $sql = "SELECT userName ,email ,gender ,hobbies ,country FROM USERS WHERE email='engmohamedali65@gmail.com'";
+        $sql = "SELECT userName ,email ,gender ,hobbies ,country FROM USERS WHERE email='$email'";
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         if ($result->num_rows > 0) {
