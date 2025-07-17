@@ -32,7 +32,7 @@
                         <td>' . $user->gender . '</td>
                         <td>' . $user->hobbies . '</td>
                         <td>' . $user->country . '</td>
-                        <td><a href="edit_page.php?email=' . urlencode($user->email) . '">Edit</a></td>
+                        <td><a href="signUP.php?email=' . urlencode($user->email) . '">Edit</a></td>
                     </tr>';
             }
             ?>
