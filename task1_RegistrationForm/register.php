@@ -5,7 +5,7 @@ $password = $_POST["password"];
 $confirmedPassword = $_POST["cpassword"];
 $gender = $_POST["gender"];
 $hobbies = $_POST["hobbies"];
-$country = $_POST["userCountry"];
+$country = $_POST["country"];
 
 if (empty($name) || empty($email) || empty($password) || empty($confirmedPassword) || empty($gender) || empty($hobbies) || empty($country)) {
     echo "Invalid Input";
