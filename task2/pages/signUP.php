@@ -7,7 +7,7 @@
 
 <body>
     <?php
-    include "db_class.php";
+    include "../classes/db_class.php";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hobbies = $_POST["hobby"];

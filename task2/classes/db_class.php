@@ -1,5 +1,5 @@
 <?php
-include "user_class.php";
+include "../classes/user_class.php";
 class DBClass
 {
     public static $conn;

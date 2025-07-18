@@ -9,7 +9,7 @@
 <body>
 
     <?php
-    include "db_class.php";
+    include "../classes/db_class.php";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST["email"];
         $user = DBClass::getUserInfoFromDB($email);

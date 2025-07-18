@@ -22,7 +22,7 @@
         </thead>
         <tbody>
             <?php
-            include "db_class.php";
+            include "../classes/db_class.php";
             $users = DBClass::getAllUsersInfofromDB();
 
             foreach ($users as $user) {
