@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="css/master.css">
+    <title>Home Page</title>
 </head>
 
 <body>
-    <h1>home page</h1>
-    <a href="users_page.php">Users List</a>
+    <p class="my-p">home page</p>
+    <a href="users_page.php" class="my-link">Users List</a> <br />
+    <a href="signIn.php" class="my-link">Log Out</a>
 </body>
 
 </html>

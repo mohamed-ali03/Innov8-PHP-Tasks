@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+    <link rel="stylesheet" href="css/master.css">
     <title>Sign In Page</title>
 </head>
 
@@ -26,7 +26,8 @@
 
     ?>
 
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+    <form class="submission-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <p class="headers">Sign In</p>
         <div>
             <label>Email</label>
             <input type="email" name="email" required>
@@ -37,8 +38,7 @@
             <input type="password" name="password" minlength="8" maxlength="12" required>
         </div>
 
-        <input type="submit">
-        <br />
+        <input type="submit" value="Sign In" class="btn">
         Don't have an Account? <a href="signUP.php">Sign Up</a>
     </form>
 </body>

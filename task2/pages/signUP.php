@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="css/master.css">
     <title>Sign Up Page</title>
 </head>
 
@@ -33,7 +34,8 @@
 
     ?>
 
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+    <form class="submission-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <p class="headers"><?php echo $oldUser ? "Update User" : "Sign Up" ?></p>
         <!---------------------------------------------- Name ------------------------------------------->
         <div>
             <label>Name</label>
@@ -63,63 +65,43 @@
         </div>
         <!---------------------------------------------- Gender ----------------------------------------->
         <label>Gender</label>
-        <div>
-            <input id="m" type="radio" name="gender" value="male" required <?php
-            if ($user->gender == "male") {
-                echo "checked";
-            }
-            ?>>
+        <div class="radio">
+            <input id="m" type="radio" name="gender" value="male" required <?php if ($user->gender == "male")
+                echo "checked"; ?>>
             <label for="m">Male</label>
-        </div>
 
-        <div>
-            <input id="f" type="radio" name="gender" value="female" <?php
-            if ($user->gender == "female") {
-                echo "checked";
-            }
-            ?>>
+            <input id="f" type="radio" name="gender" value="female" <?php if ($user->gender == "female")
+                echo "checked"; ?>>
             <label for="f">Female</label>
-        </div>
 
-        <div>
-            <input id="o" type="radio" name="gender" value="other" <?php
-            if ($user->gender == "other") {
-                echo "checked";
-            }
-            ?>>
+            <input id="o" type="radio" name="gender" value="other" <?php if ($user->gender == "other")
+                echo "checked"; ?>>
             <label for="o">Other</label>
         </div>
         <!---------------------------------------------- Hobbies ------------------------------------------->
         <label>Hobbies</label>
-        <div>
+        <div class="checkbox">
             <input id="r" type="checkbox" name="hobby[]" value="Reading" <?php
             if (str_contains($user->hobbies, "Reading")) {
                 echo "checked";
             }
             ?>>
             <label for="r">Reading</label>
-        </div>
 
-        <div>
             <input id="t" type="checkbox" name="hobby[]" value="Traveling" <?php
             if (str_contains($user->hobbies, "Traveling")) {
                 echo "checked";
             }
             ?>>
             <label for="t" t>Traveling</label>
-        </div>
 
-
-        <div>
             <input id="s" type="checkbox" name="hobby[]" value="Sports" <?php
             if (str_contains($user->hobbies, "Sports")) {
                 echo "checked";
             }
             ?>>
             <label for="s">Sports</label>
-        </div>
 
-        <div>
             <input id="ot" type="checkbox" name="hobby[]" value="Other" <?php
             if (!$olduser) {
                 echo "checked";
@@ -137,15 +119,13 @@
             <option value="German">German</option>
             <option value="India">India</option>
         </select>
-        <br />
         <?php
         if ($oldUser)
-            echo '<input type="submit" name="status" value="Update">';
+            echo '<input type="submit" name="status" value="Update" class="btn">';
         else
-            echo '<input type="submit" name="status" value="Submit">';
+            echo '<input type="submit" name="status" value="Sign Up" class="btn">';
         ?>
-        <input type="reset">
-        <br />
+        <input type="reset" class="btn">
         Already have an Email? <a href="signIn.php">Sign In</a>
 
     </form>

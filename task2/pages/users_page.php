@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="css/master.css">
     <title>Users Page</title>
 </head>
 
@@ -38,8 +39,7 @@
             ?>
         </tbody>
     </table>
-
-
+    <a href="homepage.php" class="my-link">Go To Home Page</a>
 </body>
 
 </html>
