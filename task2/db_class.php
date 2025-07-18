@@ -55,18 +55,20 @@ class DBClass
 
     static public function getUserInfoFromDB(string $email)
     {
-        $email = htmlspecialchars($email);
         $user = null;
-        if (self::$conn->connect_error) {
-            die("Connection Faild: " . self::$conn->connect_error);
-        } else {
-            $stmt = self::$conn->prepare("SELECT * FROM USERS WHERE email=?");
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $user = new UserClass($row["userName"], $row["email"], $row["password"], $row["password"], $row["gender"], $row["hobbies"], $row["country"]);
+        if ($email) {
+            $email = htmlspecialchars($email);
+            if (self::$conn->connect_error) {
+                die("Connection Faild: " . self::$conn->connect_error);
+            } else {
+                $stmt = self::$conn->prepare("SELECT * FROM USERS WHERE email=?");
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $user = new UserClass($row["userName"], $row["email"], $row["password"], $row["password"], $row["gender"], $row["hobbies"], $row["country"]);
+                }
             }
         }
         return $user;

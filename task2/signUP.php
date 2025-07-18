@@ -18,7 +18,7 @@
             DBClass::updateUserInfoInDB($user);
         } else if ($_POST["status"] == "Submit") {
             DBClass::sendUserInfoToDB($user);
-            header("location: users_page.php");
+            header("location: signIn.php");
         }
         $email = $_POST["email"];
     } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -145,6 +145,8 @@
             echo '<input type="submit" name="status" value="Submit">';
         ?>
         <input type="reset">
+        <br />
+        Already have an Email? <a href="signIn.php">Sign In</a>
 
     </form>
 </body>
