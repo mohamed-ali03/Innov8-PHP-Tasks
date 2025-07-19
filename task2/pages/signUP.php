@@ -9,15 +9,18 @@
 <body>
     <?php
     include "../classes/db_class.php";
-
+    $msg;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hobbies = $_POST["hobby"];
         $hobbiesStr = implode(", ", $hobbies);
         $user = new UserClass($_POST["name"], $_POST["email"], $_POST["password"], $_POST["cpassword"], $_POST["gender"], $hobbiesStr, $_POST["country"]);
 
         if ($_POST["status"] == "Update") {
-            DBClass::updateUserInfoInDB($user);
-        } else if ($_POST["status"] == "Submit") {
+            $status = DBClass::updateUserInfoInDB($user);
+            if ($status) {
+                $msg = "User Data is Updated Successfully";
+            }
+        } else if ($_POST["status"] == "Sign Up") {
             DBClass::sendUserInfoToDB($user);
             header("location: signIn.php");
         }
@@ -122,12 +125,19 @@
         <?php
         if ($oldUser)
             echo '<input type="submit" name="status" value="Update" class="btn">';
-        else
+        else {
             echo '<input type="submit" name="status" value="Sign Up" class="btn">';
+            echo '<input type="reset" class="btn">';
+            echo 'Already have an Email? <a href="signIn.php">Sign In</a>';
+        }
         ?>
-        <input type="reset" class="btn">
-        Already have an Email? <a href="signIn.php">Sign In</a>
 
+
+        <?php
+        if ($msg) {
+            echo '<p class="status-msg">' . $msg . '</p>';
+        }
+        ?>
     </form>
 </body>
 

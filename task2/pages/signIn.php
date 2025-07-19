@@ -10,6 +10,7 @@
 
     <?php
     include "../classes/db_class.php";
+    $msg;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST["email"];
         $user = DBClass::getUserInfoFromDB($email);
@@ -17,10 +18,10 @@
             if ($user->password === htmlspecialchars($_POST["password"])) {
                 header("location: homepage.php?email:" . urlencode($user->email));
             } else {
-                echo "password is not correct";
+                $msg = "password is not correct";
             }
         } else {
-            echo "User not found";
+            $msg = "User not found";
         }
     }
 
@@ -41,6 +42,12 @@
         <input type="submit" value="Sign In" class="btn">
         Don't have an Account? <a href="signUP.php">Sign Up</a>
     </form>
+
+    <?php
+    if ($msg) {
+        echo '<p class="status-msg">' . $msg . '</p>';
+    }
+    ?>
 </body>
 
 </html>

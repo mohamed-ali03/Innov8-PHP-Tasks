@@ -6,7 +6,8 @@ class DBClass
 
     public static function sendUserInfoToDB(UserClass $class)
     {
-        if (empty($class->userName) || empty($class->email) || empty($class->password) || empty($class->cpassword) || empty($class->country) || empty($class->gender) || empty($class->hobbies)) {
+        $opStatus = false;
+        if ($class == null || empty($class->userName) || empty($class->email) || empty($class->password) || empty($class->cpassword) || empty($class->country) || empty($class->gender) || empty($class->hobbies)) {
             echo "Invaild Data Input";
         } else if ($class->password != $class->cpassword) {
             echo "Comfirmed Password not match Password";
@@ -18,10 +19,10 @@ class DBClass
                 $class = self::protectXSS($class);
                 $stmt = self::$conn->prepare("INSERT INTO USERS(userName,email,password,gender,hobbies,country) VALUES(?,?,?,?,?,?)");
                 $stmt->bind_param("ssssss", $class->userName, $class->email, $class->password, $class->gender, $class->hobbies, $class->country);
-                $stmt->execute();
-                echo "New User created Successfully<br/>";
+                $opStatus = $stmt->execute();
             }
         }
+        return $opStatus;
     }
 
     private static function protectXSS(UserClass $class)
@@ -29,7 +30,6 @@ class DBClass
         $class->userName = htmlspecialchars($class->userName);
         $class->email = htmlspecialchars($class->email);
         $class->password = htmlspecialchars($class->password);
-        $class->cpassword = htmlspecialchars($class->cpassword);
         $class->gender = htmlspecialchars($class->gender);
         $class->hobbies = htmlspecialchars($class->hobbies);
         $class->country = htmlspecialchars($class->country);
@@ -63,12 +63,17 @@ class DBClass
             } else {
                 $stmt = self::$conn->prepare("SELECT * FROM USERS WHERE email=?");
                 $stmt->bind_param("s", $email);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $user = new UserClass($row["userName"], $row["email"], $row["password"], $row["password"], $row["gender"], $row["hobbies"], $row["country"]);
+                $opStatus = $stmt->execute();
+                if ($opStatus) {
+                    $result = $stmt->get_result();
+                    if ($result->num_rows > 0) {
+                        $row = $result->fetch_assoc();
+                        $user = new UserClass($row["userName"], $row["email"], $row["password"], $row["password"], $row["gender"], $row["hobbies"], $row["country"]);
+                    }
+                } else {
+                    echo "Error Occurs When getting user data";
                 }
+
             }
         }
         return $user;
@@ -76,6 +81,7 @@ class DBClass
 
     static public function updateUserInfoInDB(UserClass $class)
     {
+        $opStatus = false;
         if (empty($class->userName) || empty($class->email) || empty($class->password) || empty($class->cpassword) || empty($class->country) || empty($class->gender) || empty($class->hobbies)) {
             echo "Invaild Data Input";
         } else if ($class->password != $class->cpassword) {
@@ -90,10 +96,29 @@ class DBClass
                                                 SET userName=?, password=?, gender=?, hobbies=?, country=? 
                                                 WHERE email=?");
                 $stmt->bind_param("ssssss", $class->userName, $class->password, $class->gender, $class->hobbies, $class->country, $class->email);
-                $stmt->execute();
-                echo "User Data Updated Successfully<br/>";
+                $opStatus = $stmt->execute();
             }
         }
+        return $opStatus;
+    }
+
+
+    static public function deleteUser(string $email)
+    {
+        $opStatus = false;
+        if (!$email) {
+            echo "Invaild Input";
+        } else {
+            if (self::$conn->connect_error) {
+                die("Connection Faild: " . self::$conn->connect_error);
+            } else {
+                $stmt = self::$conn->prepare("DELETE FROM USERS WHERE email=?");
+                $stmt->bind_param("s", $email);
+                $opStatus = $stmt->execute();
+
+            }
+        }
+        return $opStatus;
     }
 
 
